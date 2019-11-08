@@ -4,7 +4,7 @@
 
 REGIONS is a command-line program for the GNU operating system that performs operations on geographic `regions.
 
-`regions in our case are GMT-style regions strings; e.g. -R<west>/<east>/<south>/<north>
+`regions in our case are GMT-style region strings; e.g. -R<west>/<east>/<south>/<north>
 
 ---------------------------
 
