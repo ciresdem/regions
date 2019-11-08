@@ -107,34 +107,22 @@ region_format (region_t *region, int aflag) {
 void
 region_merge (region_t *regions, int rsize) {
   int i;
-  region_t merged_region;
   for (i=0; i < rsize; i++) {
-    if (i==0) {
-      merged_region.xmin = regions[i].xmin;
-      merged_region.xmax = regions[i].xmax;
-      merged_region.ymin = regions[i].ymin;
-      merged_region.ymax = regions[i].ymax;
-    } else {
-      if (regions[i].xmin < merged_region.xmin) 
-	merged_region.xmin = regions[i].xmin;
-      if (regions[i].xmax > merged_region.xmax)
-	merged_region.xmax = regions[i].xmax;
-      if (regions[i].ymin < merged_region.ymin) 
-	merged_region.ymin = regions[i].ymin;
-      if (regions[i].ymax > merged_region.ymax)
-	merged_region.ymax = regions[i].ymax;
+    if (i > 0){
+      if (regions[i].xmin < regions[0].xmin) 
+	regions[0].xmin = regions[i].xmin;
+      if (regions[i].xmax > regions[0].xmax)
+	regions[0].xmax = regions[i].xmax;
+      if (regions[i].ymin < regions[0].ymin) 
+	regions[0].ymin = regions[i].ymin;
+      if (regions[i].ymax > regions[0].ymax)
+	regions[0].ymax = regions[i].ymax;
     }
   }
-  regions[0].xmin = merged_region.xmin;
-  regions[0].xmax = merged_region.xmax;
-  regions[0].ymin = merged_region.ymin;
-  regions[0].ymax = merged_region.ymax;
-  //return merged_region;
 }
 
 void
 region_extend (region_t *region, double xval) {
-  //region_t xregion;
   region->xmin = region->xmin - xval;
   region->xmax = region->xmax + xval;
   region->ymin = region->ymin - xval;
