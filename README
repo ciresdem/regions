@@ -1,0 +1,19 @@
+ [ R E ] [ G I ] [ O N ] s
+
+---------------------------
+
+REGIONS is a command-line program for the GNU operating system that performs operations on geographic 'regions'.
+
+---------------------------
+
+regions [OPTION]... -R<region> -R<region>... 
+Manipulate regions.
+
+  -R, --region		the input region ( xmin/xmax/ymin/ymax )
+  -m, --merge		merge the input region(s)
+  -e, --echo		echo the (processed) region(s)
+
+      --verbose		increase the verbosity.
+      --help		print this help menu and exit.
+      --version		print version information and exit.
+
