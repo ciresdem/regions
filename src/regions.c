@@ -141,8 +141,8 @@ main (int argc, char **argv) {
   int pf_length, j;
   ssize_t n = 0;
 
-  char REGION_D[]="-R-180/180/-90/90";
-  char REGION_G[]="-R0/360/-90/90";
+  char REGION_D[]="-180/180/-90/90";
+  char REGION_G[]="0/360/-90/90";
 
   region_t* rgns;
   rgns = (region_t*) malloc(sizeof(region_t));
