@@ -55,7 +55,8 @@ Manipulate regions.\n\
 \n\
   -R, --region\t\tthe input region ( xmin/xmax/ymin/ymax )\n\
   -m, --merge\t\tmerge the input region(s)\n\
-  -e, --echo\t\techo the (processed) region(s)\n\n\
+  -e, --echo\t\techo the (processed) region(s)\n\
+  -n, --name\t\techo the (processed) region(s) as a name-string\n\n\
       --verbose\t\tincrease the verbosity.\n\
       --help\t\tprint this help menu and exit.\n\
       --version\t\tprint version information and exit.\n\
@@ -135,9 +136,13 @@ main (int argc, char **argv) {
   int c, status;
   int rflag = 0, mflag = 0, eflag = 0, nflag = 0, xflag = 0;
   char* region;
+  char* tmp_region;
   double xval;
   int pf_length, j;
   ssize_t n = 0;
+
+  char REGION_D[]="-R-180/180/-90/90";
+  char REGION_G[]="-R0/360/-90/90";
 
   region_t* rgns;
   rgns = (region_t*) malloc(sizeof(region_t));
@@ -179,7 +184,13 @@ main (int argc, char **argv) {
       break;
     case 'R':
       n++;
-      region = optarg;
+
+      tmp_region = optarg;
+
+      if (strcmp(tmp_region, "d") == 0) region = REGION_D;
+      else if (strcmp(tmp_region, "g") == 0) region = REGION_G;
+      else region = tmp_region;
+
       region_t* temp = realloc(rgns, n * sizeof(region_t));
       rgns = temp;
 
@@ -193,7 +204,6 @@ main (int argc, char **argv) {
       	}
       	p = strtok(NULL, "/");
       }
-
       rflag++;
       break;
     case 'm':
