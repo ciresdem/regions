@@ -84,7 +84,7 @@ region_name (region_t *region) {
   else ns = "n";
   if (region->xmin < 0) ew = "w";
   else ew = "s";
-  printf("%s%03dx%02d_%s%03dx%02d\n", \
+  printf("%s%02dx%02d_%s%03dx%02d\n", \
 	 ns, abs((int)region->ymax), abs(((int)(region->ymax*100)%100)), \
 	 ew, abs((int)region->xmin), abs((int)(region->xmin*100)%100));
 }
