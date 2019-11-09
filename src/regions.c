@@ -258,7 +258,7 @@ main (int argc, char **argv) {
   // parse through regions and print them to stdout.
   for (i=0; i<rflag; i++) {
     if (region_p(&rgns[i])) {
-      region_extend(&rgns[i], xval);
+      if (xflag) region_extend(&rgns[i], xval);
       if (eflag) region_echo(&rgns[i]);
       else if (nflag) region_name(&rgns[i]);
       else region_format(&rgns[i], i);
