@@ -130,6 +130,26 @@ region_extend (region_t *region, double xval) {
   region->ymax = region->ymax + xval;
 }
 
+region_t
+region_parse (char* region_string) {
+
+  int j;
+  region_t rgn;
+
+  char* p = strtok(region_string, "/");
+  for (j = 0; j < 4; j++) {
+    if (p != NULL) {
+      if (j==0) rgn.xmin = atof(p);
+      if (j==1) rgn.xmax = atof(p);
+      if (j==2) rgn.ymin = atof(p);
+      if (j==3) rgn.ymax = atof(p);
+    }
+    p = strtok(NULL, "/");
+  }
+  return rgn;
+}
+  
+
 int
 main (int argc, char **argv) {
 
@@ -138,7 +158,7 @@ main (int argc, char **argv) {
   char* region;
   char* tmp_region;
   double xval;
-  int pf_length, j;
+  int pf_length;
   ssize_t n = 0;
 
   char REGION_D[]="-180/180/-90/90";
@@ -194,16 +214,7 @@ main (int argc, char **argv) {
       region_t* temp = realloc(rgns, n * sizeof(region_t));
       rgns = temp;
 
-      char* p = strtok(region, "/");
-      for (j = 0; j < 4; j++) {
-      	if (p != NULL) {
-      	  if (j==0) rgns[rflag].xmin = atof(p);
-      	  if (j==1) rgns[rflag].xmax = atof(p);
-      	  if (j==2) rgns[rflag].ymin = atof(p);
-      	  if (j==3) rgns[rflag].ymax = atof(p);
-      	}
-      	p = strtok(NULL, "/");
-      }
+      rgns[rflag] = region_parse(region);
       rflag++;
       break;
     case 'm':
@@ -233,7 +244,6 @@ main (int argc, char **argv) {
 
   if (version_flag) print_version("regions", REGIONS_VERSION);
   if (help_flag) usage();
-  //if (inflag == 0 && optind >= argc) usage ();
 
   if (!rflag) usage();
   
@@ -246,7 +256,6 @@ main (int argc, char **argv) {
   }
 
   // parse through regions and print them to stdout.
-  //fprintf(stderr,"regions: iterating region(s)\n");
   for (i=0; i<rflag; i++) {
     if (region_p(&rgns[i])) {
       region_extend(&rgns[i], xval);
@@ -257,5 +266,6 @@ main (int argc, char **argv) {
   }
 
   free(rgns);
+  rgns=NULL;
   exit(1);
 }
