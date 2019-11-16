@@ -8,12 +8,13 @@ REGIONS is a command-line program for the GNU operating system that performs ope
 
 ---------------------------
 
-regions [OPTION]... -R<region> -R<region>...
+regions [OPTION]... -R<region> -R<region>... 
 Manipulate regions.
 
   -R, --region          the input region ( xmin/xmax/ymin/ymax )
-  -m, --merge           merge the input region(s)
+  -b, --buffer          buffer the region by value
   -e, --echo            echo the (processed) region(s)
+  -m, --merge           merge the input region(s)
   -n, --name            echo the (processed) region(s) as a name-string
 
       --verbose         increase the verbosity.
