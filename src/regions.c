@@ -19,7 +19,7 @@
 #include <stddef.h>
 //#include "regions.h"
 
-#define REGIONS_VERSION "0.0.2"
+#define REGIONS_VERSION "0.0.3"
 
 typedef struct 
 {
@@ -53,10 +53,11 @@ static void
 usage() {
   fprintf(stderr, "\
 regions [OPTION]... -R<region> -R<region>... \n\
-Manipulate regions.\n\
+Manipulate the given region(s) where a REGION is a rectangle which represents\n\
+a specific geographic location.\n\
 \n\
-  -R, --region\t\tthe input region ( xmin/xmax/ymin/ymax )\n\
-  -b, --buffer\t\tbuffer the region by value\n\
+  -R, --region\t\tthe input region <east/west/south/north>\n\
+  -b, --buffer\t\tbuffer the region(s) by value\n\
   -e, --echo\t\techo the (processed) region(s)\n\
   -m, --merge\t\tmerge the input region(s)\n\
   -n, --name\t\techo the (processed) region(s) as a name-string\n\n\
@@ -64,6 +65,8 @@ Manipulate regions.\n\
       --help\t\tprint this help menu and exit.\n\
       --version\t\tprint version information and exit.\n\
 \n\
+Report bugs to <matthew.love@colorado.edu>\n\
+CIRES DEM home page: <http://ciresgroups.colorado.edu/coastalDEM>\n\
 ");
   exit (1);
 }
