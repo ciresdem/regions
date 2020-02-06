@@ -291,5 +291,5 @@ main (int argc, char **argv)
 
   free (rgns);
   rgns = NULL;
-  exit (1);
+  exit (0);
 }
