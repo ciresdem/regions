@@ -3,7 +3,7 @@
  * 
  * This file is part of REGIONS
  *
- * Copyright (c) 2019 Matthew Love <matthew.love@colorado.edu>
+ * Copyright (c) 2019 - 2020 Matthew Love <matthew.love@colorado.edu>
  * BOUNDS is liscensed under the GPL v.2 or later and 
  * is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -40,7 +40,7 @@ static void
 print_version(const char* command_name, const char* command_version) 
 {
   fprintf(stderr, "%s %s \n\
-Copyright © 2019 Matthew Love <matthew.love@colorado.edu> \n\
+Copyright © 2019 - 2020 Matthew Love <matthew.love@colorado.edu> \n\
 %s is liscensed under the GPL v.2 or later and is \n\
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;\n\
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A\n\
@@ -56,7 +56,7 @@ regions [OPTION]... -R<region> -R<region>... \n\
 Manipulate the given region(s) where a REGION is a rectangle which represents\n\
 a specific geographic location.\n\
 \n\
-  -R, --region\t\tthe input region <east/west/south/north>\n\
+  -R, --region\t\tthe input region <west/east/south/north>\n\
   -b, --buffer\t\tbuffer the region(s) by value\n\
   -e, --echo\t\techo the (processed) region(s)\n\
   -m, --merge\t\tmerge the input region(s)\n\
