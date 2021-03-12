@@ -3,7 +3,7 @@
  * 
  * This file is part of REGIONS
  *
- * Copyright (c) 2019 - 2020 Matthew Love <matthew.love@colorado.edu>
+ * Copyright (c) 2019 - 2021 Matthew Love <matthew.love@colorado.edu>
  * BOUNDS is liscensed under the GPL v.2 or later and 
  * is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,9 +17,8 @@
 #include <getopt.h>
 #include <string.h>
 #include <stddef.h>
-//#include "regions.h"
 
-#define REGIONS_VERSION "0.0.3"
+#define REGIONS_VERSION "0.0.4"
 
 typedef struct 
 {
@@ -28,6 +27,12 @@ typedef struct
   double ymin;
   double ymax;
 } region_t;
+
+typedef struct 
+{
+  double x;
+  double y;
+} point_t;
 
 typedef region_t* region_ptr_t;
 
@@ -40,7 +45,7 @@ static void
 print_version(const char* command_name, const char* command_version) 
 {
   fprintf(stderr, "%s %s \n\
-Copyright © 2019 - 2020 Matthew Love <matthew.love@colorado.edu> \n\
+Copyright © 2019 - 2021 Matthew Love <matthew.love@colorado.edu> \n\
 %s is liscensed under the GPL v.2 or later and is \n\
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;\n\
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A\n\
@@ -58,14 +63,13 @@ a specific geographic location.\n\
 \n\
   -R, --region\t\tthe input region <west/east/south/north>\n\
   -b, --buffer\t\tbuffer the region(s) by value\n\
-  -e, --echo\t\techo the (processed) region(s)\n\
   -m, --merge\t\tmerge the input region(s)\n\
+  -e, --echo\t\techo the (processed) region(s)\n\
   -n, --name\t\techo the (processed) region(s) as a name-string\n\n\
       --verbose\t\tincrease the verbosity.\n\
       --help\t\tprint this help menu and exit.\n\
       --version\t\tprint version information and exit.\n\
 \n\
-Report bugs to <matthew.love@colorado.edu>\n\
 CIRES DEM home page: <http://ciresgroups.colorado.edu/coastalDEM>\n\
 ");
   exit (1);
@@ -145,6 +149,15 @@ region_extend (region_t *region, double xval)
   region->ymax = region->ymax + xval;
 }
 
+point_t
+region_center (region_t *region)
+{
+  point_t pnt;
+  pnt.x = region->xmin + ((region->xmax - region->xmin) / 2);
+  pnt.y = region->ymin + ((region->ymax - region->ymin) / 2);
+  return pnt;
+}
+
 region_t
 region_parse (char* region_string) 
 {
@@ -165,7 +178,6 @@ region_parse (char* region_string)
   return rgn;
 }
   
-
 int
 main (int argc, char **argv) 
 {
@@ -177,7 +189,8 @@ main (int argc, char **argv)
   double bval;
   int pf_length;
   ssize_t n = 0;
-
+  point_t pnt;
+  
   char REGION_D[] = "-180/180/-90/90";
   char REGION_G[] = "0/360/-90/90";
 
@@ -196,9 +209,9 @@ main (int argc, char **argv)
 	     We distinguish them by their indices. */
 	  {"region", required_argument, 0, 'R'},
 	  {"merge", no_argument, 0, 'm'},
+	  {"buffer", required_argument, 0, 'b'},
 	  {"echo", no_argument, 0, 'e'},
 	  {"name", no_argument, 0, 'n'},
-	  {"buffer", required_argument, 0, 'b'},
 	  {0, 0, 0, 0}
 	};
       /* getopt_long stores the option index here. */
@@ -280,7 +293,6 @@ main (int argc, char **argv)
       {
 	if (bflag) 
 	  region_extend (&rgns[i], bval);
-
 	if (eflag) 
 	  region_echo (&rgns[i], eflag);
 	else if (nflag) 
